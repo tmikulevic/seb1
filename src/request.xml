@@ -1,0 +1,14 @@
+POST /webservices/FxRates/FxRates.asmx HTTP/1.1
+Host: old.lb.lt
+Content-Type: text/xml; charset=utf-8
+Content-Length: length
+SOAPAction: "http://www.lb.lt/WebServices/FxRates/getCurrentFxRates"
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <getCurrentFxRates xmlns="http://www.lb.lt/WebServices/FxRates">
+      <tp>string</tp>
+    </getCurrentFxRates>
+  </soap:Body>
+</soap:Envelope>
