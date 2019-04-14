@@ -6,7 +6,7 @@ import java.net.URL;
 
 public class Currency {
 
-	public static void GetCurrencyList () {
+	public static String GetCurrencyList () {
 		String url = "http://www.lb.lt/webservices/FxRates/FxRates.asmx?op=getCurrencyList";
 		String xml =
 				"<?xml version=\"1.0\" encoding=\"utf-8\"?>" + 
@@ -16,10 +16,10 @@ public class Currency {
 				"  </soap12:Body>" + 
 				"</soap12:Envelope>";
 		
-		SendRequest(url, xml);
+		return SendRequest(url, xml);
 	  }
 	
-	public static void GetCurrentFxRates() {
+	public static String GetCurrentFxRates() {
 		String url = "http://www.lb.lt/webservices/FxRates/FxRates.asmx?op=getCurrentFxRates";
 		String type="EU";
 		String xml =
@@ -32,15 +32,16 @@ public class Currency {
 						"</soap12:Body>"+
 						"</soap12:Envelope>";
 		
-		SendRequest(url, xml);
+		return SendRequest(url, xml);
 	  }
 	
-	private static void SendRequest(String url, String xml) {
+	private static String SendRequest(String url, String xml) {
 		try {
 			URL obj = new URL(url);
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 			con.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
 			con.setRequestMethod("POST");
+			//text/xml; charset=utf-8||application/soap+xml; charset=utf-8
 			con.setRequestProperty("Content-Type","text/xml; charset=utf-8");
 			con.setDoOutput(true);
 			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
@@ -59,9 +60,11 @@ public class Currency {
 				response.append(inputLine);
 			}
 			in.close();
-			System.out.println("response:" + response.toString());
+
+			return response.toString();
 		} catch (Exception e) {
 			System.out.println(e);
+			return "";
 		}
 	}
 	

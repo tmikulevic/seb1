@@ -1,11 +1,23 @@
+import java.util.ArrayList;
 
 public class Vykdymas {
 	public static void main(String[] args) {
 		
-		//Currency.GetCurrencyList();
+		//System.out.println(Currency.GetCurrencyList());
 		
-		//Currency.GetCurrentFxRates();
+		//System.out.println(Currency.GetCurrentFxRates());
 		
-		ParseXML.trythis();
+		/*ArrayList<String> bandymas = new ArrayList<String>();
+		bandymas = ParseXML.getRates(Currency.GetCurrentFxRates());
+		for(int i = 0; i<bandymas.size();i++) {
+			System.out.println(bandymas.get(i));
+		}*/
+		
+		
+		ArrayList<String> bandymas = new ArrayList<String>();
+		bandymas = ParseXML.getList(Currency.GetCurrencyList());
+		for(int i = 0; i<bandymas.size();i++) {
+			System.out.println(bandymas.get(i));
+		}
 	}
 }

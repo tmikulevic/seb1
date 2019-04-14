@@ -1,6 +1,8 @@
-import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,51 +16,54 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 public class ParseXML {
-	private static void readXML() throws ParserConfigurationException, SAXException, IOException {
-		// Get Document Builder
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder = factory.newDocumentBuilder();
+	public static Document readXML(String xml) throws ParserConfigurationException, SAXException, IOException {
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
 
-		String xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><getCurrentFxRatesResponse xmlns=\"http://www.lb.lt/WebServices/FxRates\"><getCurrentFxRatesResult><FxRates xmlns=\"http://www.lb.lt/WebServices/FxRates\"><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>AUD</Ccy><Amt>1.5771</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>BGN</Ccy><Amt>1.9558</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>BRL</Ccy><Amt>4.3884</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>CAD</Ccy><Amt>1.5082</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>CHF</Ccy><Amt>1.1326</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>CNY</Ccy><Amt>7.5939</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>CZK</Ccy><Amt>25.6230</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>DKK</Ccy><Amt>7.4643</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>GBP</Ccy><Amt>0.8629</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>HKD</Ccy><Amt>8.8788</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>HRK</Ccy><Amt>7.4350</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>HUF</Ccy><Amt>321.90</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>IDR</Ccy><Amt>15954.12</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>ILS</Ccy><Amt>4.0389</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>INR</Ccy><Amt>78.2915</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>ISK</Ccy><Amt>135.20</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>JPY</Ccy><Amt>126.76</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>KRW</Ccy><Amt>1283</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>MYR</Ccy><Amt>4.6580</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>MXN</Ccy><Amt>21.2360</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>NOK</Ccy><Amt>9.6020</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>NZD</Ccy><Amt>1.6748</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>PHP</Ccy><Amt>58.5530</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>PLN</Ccy><Amt>4.2796</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>RON</Ccy><Amt>4.7598</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>RUB</Ccy><Amt>72.6133</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>SEK</Ccy><Amt>10.4788</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>SGD</Ccy><Amt>1.5318</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>THB</Ccy><Amt>35.9550</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>TRY</Ccy><Amt>6.5350</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>USD</Ccy><Amt>1.1321</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-04-12</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>ZAR</Ccy><Amt>15.7631</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>AED</Ccy><Amt>4.121260</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>AFN</Ccy><Amt>85.3243</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>ALL</Ccy><Amt>125.349860</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>AMD</Ccy><Amt>545.3799</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>ARS</Ccy><Amt>49.223310</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>AZN</Ccy><Amt>1.903390</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>BAM</Ccy><Amt>1.957860</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>BDT</Ccy><Amt>94.518680</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>BHD</Ccy><Amt>0.422910</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>BYN</Ccy><Amt>2.394240</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>BOB</Ccy><Amt>7.780720</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>CLP</Ccy><Amt>764.356490</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>COP</Ccy><Amt>3571.727830</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>DJF</Ccy><Amt>199.735150</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>DZD</Ccy><Amt>133.977660</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>EGP</Ccy><Amt>19.420950</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>ETB</Ccy><Amt>32.087770</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>GEL</Ccy><Amt>3.0259</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>GNF</Ccy><Amt>10235.549850</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>YER</Ccy><Amt>280.880180</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>IQD</Ccy><Amt>1338.727570</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>IRR</Ccy><Amt>47121.90</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>JOD</Ccy><Amt>0.794560</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>KES</Ccy><Amt>113.036460</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>KGS</Ccy><Amt>78.334550</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>KWD</Ccy><Amt>0.341060</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>KZT</Ccy><Amt>428.338070</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>LBP</Ccy><Amt>1691.9006</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>LYD</Ccy><Amt>1.5594</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>LKR</Ccy><Amt>197.687590</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>MAD</Ccy><Amt>10.850830</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>MDL</Ccy><Amt>19.409740</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>MGA</Ccy><Amt>4023.3127</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>MKD</Ccy><Amt>61.5053</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>MNT</Ccy><Amt>2950.7285</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>MZN</Ccy><Amt>71.131630</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>PAB</Ccy><Amt>1.121950</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>PEN</Ccy><Amt>3.724090</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>PKR</Ccy><Amt>157.718120</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>QAR</Ccy><Amt>4.084740</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>RSD</Ccy><Amt>117.933770</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>SAR</Ccy><Amt>4.207710</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>SYP</Ccy><Amt>578.140840</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>TJS</Ccy><Amt>10.590650</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>TMT</Ccy><Amt>3.921220</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>TND</Ccy><Amt>3.3741</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>TWD</Ccy><Amt>34.653670</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>TZS</Ccy><Amt>2608.533750</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>UAH</Ccy><Amt>30.582670</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>UYU</Ccy><Amt>37.927520</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>UZS</Ccy><Amt>9413.048310</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>VES</Ccy><Amt>3691.622040</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>VND</Ccy><Amt>26030.361950</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>XAF</Ccy><Amt>692.377780</Amt></CcyAmt></FxRate><FxRate><Tp>EU</Tp><Dt>2019-03-28</Dt><CcyAmt><Ccy>EUR</Ccy><Amt>1</Amt></CcyAmt><CcyAmt><Ccy>XOF</Ccy><Amt>652.9749</Amt></CcyAmt></FxRate></FxRates></getCurrentFxRatesResult></getCurrentFxRatesResponse></soap:Body></soap:Envelope>"
-				+ "";
-		InputSource src = new InputSource();
-		src.setCharacterStream(new StringReader(xml));
+			InputSource src = new InputSource();
+			src.setCharacterStream(new StringReader(xml));
 
-		// Build Document
-		Document document = builder.parse(src);
+			// Build Document
+			Document document = builder.parse(src);
 
-		// Normalize the XML Structure; It's just too important !!
-		document.getDocumentElement().normalize();
-
-		// Here comes the root node
-		Element root = document.getDocumentElement();
-		System.out.println(root.getNodeName());
-
-		// Get all employees
-		NodeList nList = document.getElementsByTagName("FxRate");
-		System.out.println("============================");
-
-		for (int temp = 0; temp < nList.getLength(); temp++) {
-			Node node = nList.item(temp);
-			if (node.getNodeType() == Node.ELEMENT_NODE) {
-				
-				Element ccyAmt = (Element) node;
-				
-				Element eElement = (Element) ccyAmt.getElementsByTagName("CcyAmt").item(0);
-				System.out.println(eElement.getElementsByTagName("Ccy").item(0).getTextContent()+
-				" : " + eElement.getElementsByTagName("Amt").item(0).getTextContent());
-				
-				Element eElement1 = (Element) ccyAmt.getElementsByTagName("CcyAmt").item(1);
-				System.out.println(eElement1.getElementsByTagName("Ccy").item(0).getTextContent()+
-				" : " + eElement1.getElementsByTagName("Amt").item(0).getTextContent());
-			}
-		}
+			// Normalize the XML Structure; It's just too important !!
+			document.getDocumentElement().normalize();
+			return document;
 	}
 
-	public static void trythis() {
-		
+	public static ArrayList<String> getRates(String xml) {
+		ArrayList<String> result = new ArrayList<String>();
+		String resultString = "";
 		try {
-			readXML();
+			Document document = readXML(xml);
+			Element root = document.getDocumentElement();
+			NodeList nList = document.getElementsByTagName("FxRate");
+
+			for (int temp = 0; temp < nList.getLength(); temp++) {
+				Node node = nList.item(temp);
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+					Element ccyAmt = (Element) node;
+
+					Element eElement = (Element) ccyAmt.getElementsByTagName("CcyAmt").item(0);
+					/*System.out.println(eElement.getElementsByTagName("Ccy").item(0).getTextContent() + " : "
+							+ eElement.getElementsByTagName("Amt").item(0).getTextContent());*/
+					resultString=resultString+eElement.getElementsByTagName("Ccy").item(0).getTextContent();
+					resultString=resultString+"|";
+					resultString=resultString+eElement.getElementsByTagName("Amt").item(0).getTextContent();
+					resultString=resultString+"|";
+					Element eElement1 = (Element) ccyAmt.getElementsByTagName("CcyAmt").item(1);
+					resultString=resultString+eElement1.getElementsByTagName("Ccy").item(0).getTextContent();
+					resultString=resultString+"|";
+					resultString=resultString+eElement1.getElementsByTagName("Amt").item(0).getTextContent();
+					resultString=resultString+"|";
+					/*System.out.println(eElement1.getElementsByTagName("Ccy").item(0).getTextContent() + " : "
+							+ eElement1.getElementsByTagName("Amt").item(0).getTextContent());*/
+					result.add(resultString);
+					resultString = "";
+				}
+
+			}
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,6 +74,50 @@ public class ParseXML {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
+	
+	public static ArrayList<String> getList(String xml) {
+		ArrayList<String> result = new ArrayList<String>();
+		String resultString = "";
+		try {
+			Document document = readXML(xml);
+			Element root = document.getDocumentElement();
+			NodeList nList = document.getElementsByTagName("CcyNtry");
 
+			for (int temp = 0; temp < nList.getLength(); temp++) {
+				Node node = nList.item(temp);
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+					Element CcyNtry = (Element) node;
+
+					resultString=resultString+CcyNtry.getElementsByTagName("Ccy").item(0).getTextContent();
+					resultString=resultString+"|";
+					Element CcyNm = (Element) CcyNtry.getElementsByTagName("CcyNm").item(0);
+					resultString=resultString+CcyNm.getAttribute("lang");
+					resultString=resultString+CcyNm.getTextContent();
+					resultString=resultString+"|";
+					CcyNm = (Element) CcyNtry.getElementsByTagName("CcyNm").item(1);
+					resultString=resultString+CcyNm.getAttribute("lang");
+					resultString=resultString+CcyNm.getTextContent();
+					
+					resultString=resultString+"|";
+					result.add(resultString);
+					resultString = "";
+				}
+
+			}
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 }
