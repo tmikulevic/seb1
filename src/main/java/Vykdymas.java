@@ -2,22 +2,19 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Vykdymas {
 	public static void main(String[] args) throws SQLException {
 		
-		ArrayList<String> bandymas = new ArrayList<String>();
-		bandymas = ParseXML.getRates(Currency.GetCurrentFxRates());
-		for(int i = 0; i<bandymas.size();i++) {
-			System.out.println(bandymas.get(i));
-		}
+		
 		//DBValiutos.uzpildytiValiutosTable();
+		//DBSantykiai.uzpildytiSantykiaiTable();
 		
-		/*DBsasaja db = DBsasaja.getInstance();
+		DBsasaja db = DBsasaja.getInstance();
 		db.openConn();
-		
-		//ResultSet result = DBValiutos.executeSelectAll();
-		ResultSet result = DBValiutos.getCurrency("LTL");
+		ResultSet result = DBValiutos.executeSelectAll();
+		//ResultSet result = DBValiutos.getCurrency("EUR");
 		
 	      ResultSetMetaData rsmd = result.getMetaData();
 			int columnsNumber = rsmd.getColumnCount();
@@ -30,6 +27,17 @@ public class Vykdymas {
 			    }
 			    System.out.println("");
 			}
-		db.closeConn();*/
+
+		
+		System.out.println("Pasirink valiutos id: ");
+		Scanner sc = new Scanner(System.in);
+		Double santykis;
+		santykis = DBSantykiai.getRates(sc.nextInt());
+		System.out.println("Irasyk suma eurais: ");
+		Scanner sc2 = new Scanner(System.in);
+		Double eurais = sc2.nextDouble();
+		System.out.println(eurais + " eurais yra " + santykis * eurais + " kita valiuta ");
+		
+		db.closeConn();
 	}
 }

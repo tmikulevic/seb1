@@ -1,8 +1,5 @@
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -31,39 +28,30 @@ public class ParseXML {
 			return document;
 	}
 
-	public static ArrayList<String> getRates(String xml) {
-		ArrayList<String> result = new ArrayList<String>();
-		String resultString = "";
+	public static String[][] getRates(String xml) {
+		String[][] result;
 		try {
 			Document document = readXML(xml);
 			Element root = document.getDocumentElement();
 			NodeList nList = document.getElementsByTagName("FxRate");
-
+			result = new String[nList.getLength()][2];
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 				Node node = nList.item(temp);
 				if (node.getNodeType() == Node.ELEMENT_NODE) {
 
 					Element ccyAmt = (Element) node;
 
-					Element eElement = (Element) ccyAmt.getElementsByTagName("CcyAmt").item(0);
-					/*System.out.println(eElement.getElementsByTagName("Ccy").item(0).getTextContent() + " : "
-							+ eElement.getElementsByTagName("Amt").item(0).getTextContent());*/
-					resultString=resultString+eElement.getElementsByTagName("Ccy").item(0).getTextContent();
-					resultString=resultString+"|";
-					resultString=resultString+eElement.getElementsByTagName("Amt").item(0).getTextContent();
-					resultString=resultString+"|";
+					//Element eElement = (Element) ccyAmt.getElementsByTagName("CcyAmt").item(0);
+					//resultString=resultString+eElement.getElementsByTagName("Ccy").item(0).getTextContent();//EUR
+					//resultString=resultString+eElement.getElementsByTagName("Amt").item(0).getTextContent();//1
+					
 					Element eElement1 = (Element) ccyAmt.getElementsByTagName("CcyAmt").item(1);
-					resultString=resultString+eElement1.getElementsByTagName("Ccy").item(0).getTextContent();
-					resultString=resultString+"|";
-					resultString=resultString+eElement1.getElementsByTagName("Amt").item(0).getTextContent();
-					resultString=resultString+"|";
-					/*System.out.println(eElement1.getElementsByTagName("Ccy").item(0).getTextContent() + " : "
-							+ eElement1.getElementsByTagName("Amt").item(0).getTextContent());*/
-					result.add(resultString);
-					resultString = "";
+					result[temp][0] = eElement1.getElementsByTagName("Ccy").item(0).getTextContent();
+					result[temp][1] = eElement1.getElementsByTagName("Amt").item(0).getTextContent();
 				}
 
 			}
+			return result;
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -74,12 +62,11 @@ public class ParseXML {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return result;
+		return null;
 	}
 	
 	public static String[][] getList(String xml) {
 		String[][] result;
-		String resultString = "";
 		try {
 			Document document = readXML(xml);
 			Element root = document.getDocumentElement();

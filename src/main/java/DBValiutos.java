@@ -8,161 +8,118 @@ import java.util.List;
 
 public class DBValiutos {
 	private static final String SELECT_BY_ID = "SELECT * FROM VALIUTOS WHERE ID = ?";
-	  private static final String SELECT_ALL = "SELECT * FROM VALIUTOS";
-	  private static final String SELECT_CURR = "SELECT * FROM VALIUTOS WHERE VALIUTOS_KODAS = ?";
-	  
-	  private static final String INSERT = "INSERT INTO VALIUTOS (ID, VALIUTOS_KODAS, VALIUTA_LT, VALIUTA_EN) "
-	      + "VALUES (?, ?, ?, ?)";
-	  
-	  private static final String UPDATE = "UPDATE VALIUTOS SET VALIUTOS_KODAS=?, VALIUTA_LT=?, VALIUTA_EN=? WHERE ID = ?";
-	  
-	  private static final String DELETE = "DELETE FROM VALIUTOS WHERE ID = ?";
-	  
-	  static int indexState;
-	  private static PreparedStatement statement;
-	  
-	  public static ResultSet executeSelectAll() {
-		  try {
-		      statement = DBsasaja.getInstance().getConn().prepareStatement(SELECT_ALL);
+	private static final String SELECT_ALL = "SELECT * FROM VALIUTOS";
+	private static final String SELECT_CURR = "SELECT * FROM VALIUTOS WHERE VALIUTOS_KODAS = ?";
 
-		      ResultSet result = statement.executeQuery();
+	private static final String INSERT = "INSERT INTO VALIUTOS (ID, VALIUTOS_KODAS, VALIUTA_LT, VALIUTA_EN) "
+			+ "VALUES (?, ?, ?, ?)";
 
-		      return result;
+	private static final String UPDATE = "UPDATE VALIUTOS SET VALIUTOS_KODAS=?, VALIUTA_LT=?, VALIUTA_EN=? WHERE ID = ?";
 
-		    } catch (SQLException e) {
-		      e.printStackTrace();
-		    }
+	private static final String DELETE = "DELETE FROM VALIUTOS WHERE ID = ?";
+
+	static int indexState;
+	private static PreparedStatement statement;
+
+	public static ResultSet executeSelectAll() {
+		try {
+			statement = DBsasaja.getInstance().getConn().prepareStatement(SELECT_ALL);
+
+			ResultSet result = statement.executeQuery();
+
+			return result;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
-	  }
-	  
-	  public static ResultSet executeSelectId(String id) {
-		  try {
-		      statement = DBsasaja.getInstance().getConn().prepareStatement(SELECT_BY_ID);
+	}
 
-		      statement = fillStatementSelect(statement, id);
+	public static ResultSet executeSelectId(String id) {
+		try {
+			statement = DBsasaja.getInstance().getConn().prepareStatement(SELECT_BY_ID);
 
-		      ResultSet result = statement.executeQuery();
+			statement = fillStatementSelect(statement, id);
 
-		      
-		      return result;
+			ResultSet result = statement.executeQuery();
 
-		    } catch (SQLException e) {
-		      e.printStackTrace();
-		    }
+			return result;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
-	  }
-	  
-	  public static PreparedStatement fillStatementSelect(PreparedStatement statement, String id) {
-		    
-		    if (null == id || id.equals("")) {
-		      id = "-1";
-		    }
+	}
 
-		    try {
+	public static PreparedStatement fillStatementSelect(PreparedStatement statement, String id) {
 
-		      statement.setInt(1, Integer.parseInt(id));
+		if (null == id || id.equals("")) {
+			id = "-1";
+		}
 
-		    } catch (NumberFormatException | SQLException e) {
-		      e.printStackTrace();
-		    }
-		    
-		    return statement;
-		  }
-	  
-	  public static void fillStatementInsert(int id, String valiutosKodas,
-			  String valiutaLT, String valiutaEN) {
-	    
-	    indexState = 1;
-	    
-	    try {
-	        statement = DBsasaja.getInstance().getConn().prepareStatement(INSERT,
-	            Statement.RETURN_GENERATED_KEYS);
+		try {
 
-	        statement.setInt(indexState++, id);//todo
-	        statement.setString(indexState++, valiutosKodas);
-	        statement.setString(indexState++, valiutaLT);
-	        statement.setString(indexState++, valiutaEN);
+			statement.setInt(1, Integer.parseInt(id));
 
-	        statement.execute();
-	       
-	        System.out.println("done: "+valiutosKodas);
-	    } catch (SQLException e) {
-	      e.printStackTrace();
-	    }
-	    
-	  }
-	  
-	  public static void uzpildytiValiutosTable() {
-		  DBsasaja db = DBsasaja.getInstance();
-			db.openConn();
-			
-			String[][] bandymas = ParseXML.getList(Currency.GetCurrencyList());
-			for(int row = 0; row<bandymas.length;row++) {
-				DBValiutos.fillStatementInsert(row, bandymas[row][0], bandymas[row][1], bandymas[row][2]);
-			}
-			
-			try {
-				db.getConn().commit();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			db.closeConn();
-	  }
-	  
+		} catch (NumberFormatException | SQLException e) {
+			e.printStackTrace();
+		}
 
-	  public static ResultSet getCurrency(String valiuta) {
-	    
-		  ResultSet resultSet = null;
+		return statement;
+	}
 
-	    try {
+	public static void fillStatementInsert(int id, String valiutosKodas, String valiutaLT, String valiutaEN) {
 
-	      PreparedStatement state =
-	          DBsasaja.getInstance().getConn().prepareStatement(SELECT_CURR);
-	      state.setString(1, valiuta);
-	      resultSet = state.executeQuery();
+		indexState = 1;
 
-	     /* while (rs.next()) {
-	        
-	        bdlModel.setBdlId(String.valueOf(rs.getInt("BDL_ID")));
-	        bdlModel.setRefBdl(rs.getString("REF"));
-	        bdlModel.setClient(rs.getString("CLIENT"));
+		try {
+			statement = DBsasaja.getInstance().getConn().prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
 
-	        BdlDbTable bdl = new BdlDbTable(bdlModel, true);
+			statement.setInt(indexState++, id);// todo
+			statement.setString(indexState++, valiutosKodas);
+			statement.setString(indexState++, valiutaLT);
+			statement.setString(indexState++, valiutaEN);
 
-	        bdlInDb.add(bdl);
-	      }*/
+			statement.execute();
 
+			System.out.println("done: " + valiutosKodas);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-	    } catch (SQLException e) {
-	      e.printStackTrace();
-	    }
+	}
 
-	    return resultSet;
-	    
-	  }
-	  
-	/*public static String getRefByBdlId(String id) {
-	    
-	    try {
+	public static void uzpildytiValiutosTable() {
+		DBsasaja db = DBsasaja.getInstance();
+		db.openConn();
 
-	      PreparedStatement state =
-	          DBsasaja.getInstance().getConn().prepareStatement(SELECT_BY_ID);
-	      state.setString(1, id);
-	      ResultSet rs = state.executeQuery();
+		String[][] bandymas = ParseXML.getList(Currency.GetCurrencyList());
+		for (int row = 0; row < bandymas.length; row++) {
+			DBValiutos.fillStatementInsert(row, bandymas[row][0], bandymas[row][1], bandymas[row][2]);
+		}
 
-	      while (rs.next()) {
+		try {
+			db.getConn().commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-	        return rs.getString("REF");//todo
-	        
-	      }
+		db.closeConn();
+	}
 
-	    } catch (SQLException e) {
-	      e.printStackTrace();
-	    }
+	public static ResultSet getCurrency(String valiuta) {
 
-	    return null;
-	    
-	  }*/
+		ResultSet resultSet = null;
+
+		try {
+			PreparedStatement state = DBsasaja.getInstance().getConn().prepareStatement(SELECT_CURR);
+			state.setString(1, valiuta);
+			resultSet = state.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return resultSet;
+	}
 }
