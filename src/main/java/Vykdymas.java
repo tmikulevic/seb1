@@ -6,17 +6,18 @@ import java.util.ArrayList;
 public class Vykdymas {
 	public static void main(String[] args) throws SQLException {
 		
-		/*ArrayList<String> bandymas = new ArrayList<String>();
+		ArrayList<String> bandymas = new ArrayList<String>();
 		bandymas = ParseXML.getRates(Currency.GetCurrentFxRates());
 		for(int i = 0; i<bandymas.size();i++) {
 			System.out.println(bandymas.get(i));
-		}*/
+		}
 		//DBValiutos.uzpildytiValiutosTable();
 		
-		DBsasaja db = DBsasaja.getInstance();
+		/*DBsasaja db = DBsasaja.getInstance();
 		db.openConn();
 		
-		ResultSet result = DBValiutos.executeSelectAll();
+		//ResultSet result = DBValiutos.executeSelectAll();
+		ResultSet result = DBValiutos.getCurrency("LTL");
 		
 	      ResultSetMetaData rsmd = result.getMetaData();
 			int columnsNumber = rsmd.getColumnCount();
@@ -29,6 +30,6 @@ public class Vykdymas {
 			    }
 			    System.out.println("");
 			}
-		db.closeConn();
+		db.closeConn();*/
 	}
 }

@@ -112,20 +112,18 @@ public class DBValiutos {
 	  }
 	  
 
-
-	/*  public static List<DbTable> getBdlInDbByNature(String nature) {
+	  public static ResultSet getCurrency(String valiuta) {
 	    
-	    List<DbTable> bdlInDb = new ArrayList<>();
+		  ResultSet resultSet = null;
 
 	    try {
 
 	      PreparedStatement state =
-	          AkkaDocsConnector.getInstance().getConn().prepareStatement(SELECT_BY_NATURE);
-	      state.setString(1, nature);
-	      ResultSet rs = state.executeQuery();
+	          DBsasaja.getInstance().getConn().prepareStatement(SELECT_CURR);
+	      state.setString(1, valiuta);
+	      resultSet = state.executeQuery();
 
-	      while (rs.next()) {
-	        BDLModel bdlModel = new BDLModel();
+	     /* while (rs.next()) {
 	        
 	        bdlModel.setBdlId(String.valueOf(rs.getInt("BDL_ID")));
 	        bdlModel.setRefBdl(rs.getString("REF"));
@@ -134,16 +132,16 @@ public class DBValiutos {
 	        BdlDbTable bdl = new BdlDbTable(bdlModel, true);
 
 	        bdlInDb.add(bdl);
-	      }
+	      }*/
 
 
 	    } catch (SQLException e) {
 	      e.printStackTrace();
 	    }
 
-	    return bdlInDb;
+	    return resultSet;
 	    
-	  }*/
+	  }
 	  
 	/*public static String getRefByBdlId(String id) {
 	    
