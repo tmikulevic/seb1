@@ -3,6 +3,7 @@
   <groupId>lt.seb</groupId>
   <artifactId>Seb2</artifactId>
   <version>0.0.1</version>
+  
   <build>
   	<plugins>
   		<plugin>
@@ -16,4 +17,11 @@
   		</plugin>
   	</plugins>
   </build>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.h2database</groupId>
+  		<artifactId>h2</artifactId>
+  		<version>1.4.199</version>
+  	</dependency>
+  </dependencies>
 </project>

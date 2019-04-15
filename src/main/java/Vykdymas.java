@@ -1,23 +1,34 @@
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Vykdymas {
-	public static void main(String[] args) {
-		
-		//System.out.println(Currency.GetCurrencyList());
-		
-		//System.out.println(Currency.GetCurrentFxRates());
+	public static void main(String[] args) throws SQLException {
 		
 		/*ArrayList<String> bandymas = new ArrayList<String>();
 		bandymas = ParseXML.getRates(Currency.GetCurrentFxRates());
 		for(int i = 0; i<bandymas.size();i++) {
 			System.out.println(bandymas.get(i));
 		}*/
+		//DBValiutos.uzpildytiValiutosTable();
 		
+		DBsasaja db = DBsasaja.getInstance();
+		db.openConn();
 		
-		ArrayList<String> bandymas = new ArrayList<String>();
-		bandymas = ParseXML.getList(Currency.GetCurrencyList());
-		for(int i = 0; i<bandymas.size();i++) {
-			System.out.println(bandymas.get(i));
-		}
+		ResultSet result = DBValiutos.executeSelectAll();
+		
+	      ResultSetMetaData rsmd = result.getMetaData();
+			int columnsNumber = rsmd.getColumnCount();
+
+			while (result.next()) {
+			    for (int i = 1; i <= columnsNumber; i++) {
+			        if (i > 1) System.out.print(",  ");
+			        String columnValue = result.getString(i);
+			        System.out.print(columnValue + " " + rsmd.getColumnName(i));
+			    }
+			    System.out.println("");
+			}
+		db.closeConn();
 	}
 }

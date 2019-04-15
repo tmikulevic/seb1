@@ -77,36 +77,33 @@ public class ParseXML {
 		return result;
 	}
 	
-	public static ArrayList<String> getList(String xml) {
-		ArrayList<String> result = new ArrayList<String>();
+	public static String[][] getList(String xml) {
+		String[][] result;
 		String resultString = "";
 		try {
 			Document document = readXML(xml);
 			Element root = document.getDocumentElement();
 			NodeList nList = document.getElementsByTagName("CcyNtry");
-
+			result = new String[nList.getLength()][3];
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 				Node node = nList.item(temp);
 				if (node.getNodeType() == Node.ELEMENT_NODE) {
 
 					Element CcyNtry = (Element) node;
 
-					resultString=resultString+CcyNtry.getElementsByTagName("Ccy").item(0).getTextContent();
-					resultString=resultString+"|";
+					result[temp][0] = CcyNtry.getElementsByTagName("Ccy").item(0).getTextContent();
+
 					Element CcyNm = (Element) CcyNtry.getElementsByTagName("CcyNm").item(0);
-					resultString=resultString+CcyNm.getAttribute("lang");
-					resultString=resultString+CcyNm.getTextContent();
-					resultString=resultString+"|";
-					CcyNm = (Element) CcyNtry.getElementsByTagName("CcyNm").item(1);
-					resultString=resultString+CcyNm.getAttribute("lang");
-					resultString=resultString+CcyNm.getTextContent();
+					//resultString=resultString+CcyNm.getAttribute("lang");
+					result[temp][1] = CcyNm.getTextContent();
 					
-					resultString=resultString+"|";
-					result.add(resultString);
-					resultString = "";
+					CcyNm = (Element) CcyNtry.getElementsByTagName("CcyNm").item(1);
+					//resultString=resultString+CcyNm.getAttribute("lang");
+					result[temp][2] = CcyNm.getTextContent();
 				}
 
 			}
+			return result;
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -117,7 +114,7 @@ public class ParseXML {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return result;
+		return null;
 	}
 	
 }
